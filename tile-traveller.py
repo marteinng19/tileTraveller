@@ -1,1 +1,1 @@
-print("Marteinn")
+print("hæ")
