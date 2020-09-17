@@ -5,14 +5,15 @@ def north(tile):
 def south(tile):
     tile -= 1
     return tile
-
 def east(tile):
     tile += 10
     return tile
-
 def west(tile):
     tile -= 10
     return tile
+def victory():
+    running = False
+    print("Victory!")
 
 #values
 running = True
@@ -29,8 +30,6 @@ while running:
         east(position)
     if direction == w or W:
         west(position)
-    if tile == 31:
-        running = False
+    if position == 31:
+        victory()
 
-
-print("Victory!")
