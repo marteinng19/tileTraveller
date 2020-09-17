@@ -1,48 +1,64 @@
 #functions
-def north(tile):
-    tile += 1
-    return tile
+def north(pos):
+    pos += 1
+    return pos
 
-def south(tile):
-    tile -= 1
-    return tile
+def south(pos):
+    pos -= 1
+    return pos
 
-def east(tile):
-    tile += 10
-    return tile
+def east(pos):
+    pos += 1
+    return pos
 
-def west(tile):
-    tile -= 10
-    return tile
+def west(pos):
+    pos -= 1
+    return pos
 
 def victory():
     running = False
     print("Victory!")
     return running
-#def encode_direction(compass):
-#    if compass == n:
+
+def print_pos():
+    print(position_x,position_y)
+
+def ui():
+    direction = str(input("Direction: "))
+    direction = direction.lower()
+    return direction
+
+
 
 #values
 running = True
-position = 11
-user_input = str(input("Direction: "))
-
-direction = user_input.lower()
+position_x = 1
+position_y = 1
+direction = str(input("Direction: "))
 
 while running == True:
+    ui()
+    if direction == "n" or direction == "s" or direction == "e" or direction == "w":
+        if direction == "n":
+            position_y = north(position_y)
+            print_pos()
 
-    if direction == "n":
-        north(position)
-        print(position)
-    if direction == "s":
-        south(position)
-        print(position)
-    if direction == "e":
-        east(position)
-        print(position)
-    if direction == "w":
-        west(position)
-        print(position)
-    if position == 31:
-        victory()
+        if direction == "s":
+            position_y = south(position_y)
+            print_pos()
+            
+        if direction == "e":
+            position_x = east(position_x)
+            print_pos()
+            
+        if direction == "w":
+            position_x = west(position_x)
+            print_pos()
+            
+        if position_x == 3 and position_y == 1:
+            victory()
+    else:
+        print("Not a valid direction!")
+        
+    
 
