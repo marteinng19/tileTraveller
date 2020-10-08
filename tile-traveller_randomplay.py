@@ -64,7 +64,7 @@ def play_one_move(col, row, valid_directions):
     victory = False
     direction = rand.choice([NORTH, EAST, SOUTH, WEST])
     print("Direction: ", direction)
-    
+
     if not direction in valid_directions:
         print("Not a valid direction!")
     else:
@@ -73,14 +73,16 @@ def play_one_move(col, row, valid_directions):
     return victory, col, row
 
 # The main program starts here
-victory = False
-row = 1
-col = 1
+play_again = ""
+while play_again.lower() != "n":
+    victory = False
+    row = 1
+    col = 1
+    rand.seed(int(input("Input seed: ")))
 
-rand.seed(int(input("Input seed: ")))
-
-while not victory:
-    valid_directions = find_directions(col, row)
-    print_directions(valid_directions)
-    victory, col, row = play_one_move(col, row, valid_directions)
-print("Victory!")
+    while not victory:
+        valid_directions = find_directions(col, row)
+        victory, col, row = play_one_move(col, row, valid_directions)
+        print_directions(valid_directions)
+    print("Victory!")
+    play_again = input("Play a gain (y/n): ")
