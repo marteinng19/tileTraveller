@@ -92,7 +92,13 @@ def pull_lever(is_lever, total_coins):
         return 1
     elif lever == "n": 
         return 0
+def reset():
+    col = 1
+    row = 1
+    total_coins = 0
+    victory = False
 
+    return col, row, total_coins, victory
 # The main program starts here
 victory = False
 row = 1
@@ -100,7 +106,9 @@ col = 1
 total_coins = 0
 play_again = ""
 
-while play_again != ""
+while play_again != "n":
+    if play_again == "y":
+        col, row, total_coins, victory = reset()
     while not victory:
         valid_directions, is_lever = find_directions(col, row)
         if is_lever and right_direction:
@@ -110,3 +118,4 @@ while play_again != ""
         victory, col, row, right_direction = play_one_move(col, row, valid_directions)
 
     print("Victory! Total coins {}.".format(total_coins))
+    play_again = input("Play again? (y/n): ")
