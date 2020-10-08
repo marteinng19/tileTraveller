@@ -86,7 +86,7 @@ def pull_lever(is_lever, total_coins):
         lever = lever.lower()
 
         if lever == "y":
-            total_coins += 1
+            total_coins = total_coins + 1
             print("You received 1 coin, your total is now {}.".format(total_coins))
             return total_coins
 
@@ -103,4 +103,4 @@ while not victory:
     print_directions(valid_directions)
     victory, col, row = play_one_move(col, row, valid_directions)
 
-print("Victory!")
+print("Victory! Total coins {}".format(total_coins))
