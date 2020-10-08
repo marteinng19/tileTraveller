@@ -4,6 +4,10 @@ NORTH = 'n'
 EAST = 'e'
 SOUTH = 's'
 WEST = 'w'
+YES = 'y'
+NO = 'n'
+LEVERS = [(1,2), (2,2), (2,3), (3,2)]
+
 
 def move(direction, col, row):
     ''' Returns updated col, row given the direction '''
@@ -21,6 +25,23 @@ def is_victory(col, row):
     ''' Return true if player is in the victory cell '''
     return col == 3 and row == 1 # (3,1)
 
+def print_directions(directions_str):
+    print("You can travel: ", end='')
+    first = True
+    for ch in directions_str:
+        if not first:
+            print(" or ", end='')
+        if ch == NORTH:
+            print("(N)orth", end='')
+        elif ch == EAST:
+            print("(E)ast", end='')
+        elif ch == SOUTH:
+            print("(S)outh", end='')
+        elif ch == WEST:
+            print("(W)est", end='')
+        first = False
+    print(".")
+        
 def print_directions(directions_str):
     print("You can travel: ", end='')
     first = True
@@ -58,12 +79,25 @@ def find_directions(col, row):
         valid_directions = SOUTH+WEST
     return valid_directions
 
+
+def pull_lever(is_lever, total_coins):
+    if is_lever:
+        lever = rand.choice([YES, NO])
+        print("Pull a lever (y/n):", lever)
+
+        if lever == "y":
+            total_coins += 1
+            print("You received 1 coin, your total is now {}.".format(total_coins))
+            return total_coins
+    return 0 
+
+
 def play_one_move(col, row, valid_directions):
     ''' Plays one move of the game
         Return if victory has been obtained and updated col,row '''
     victory = False
     direction = rand.choice([NORTH, EAST, SOUTH, WEST])
-    print("Direction: ", direction)
+    print("Direction:", direction)
 
     if not direction in valid_directions:
         print("Not a valid direction!")
@@ -72,6 +106,12 @@ def play_one_move(col, row, valid_directions):
         victory = is_victory(col, row)
     return victory, col, row
 
+def check_if_lever(col, row,):
+    for i in LEVERS:
+        if col == i[0] and row == i[1]:
+            LEVERS.remove(i)
+            return True
+
 # The main program starts here
 play_again = ""
 while play_again.lower() != "n":
@@ -79,10 +119,14 @@ while play_again.lower() != "n":
     row = 1
     col = 1
     rand.seed(int(input("Input seed: ")))
-
+    total_coins = 0
     while not victory:
         valid_directions = find_directions(col, row)
-        victory, col, row = play_one_move(col, row, valid_directions)
         print_directions(valid_directions)
+        victory, col, row = play_one_move(col, row, valid_directions)
+        is_lever = check_if_lever(col, row)
+        if is_lever:
+            new_value = pull_lever(is_lever, total_coins)
+            total_coins += new_value
     print("Victory!")
     play_again = input("Play a gain (y/n): ")

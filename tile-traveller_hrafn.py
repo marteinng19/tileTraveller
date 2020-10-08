@@ -99,6 +99,7 @@ total_coins = 0
 
 while not victory:
     valid_directions, is_lever = find_directions(col, row)
+    if is_lever:
     new_value = pull_lever(is_lever, total_coins)
     total_coins += new_value
     print_directions(valid_directions)
