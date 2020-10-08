@@ -85,11 +85,12 @@ def pull_lever(is_lever, total_coins):
         lever = rand.choice([YES, NO])
         print("Pull a lever (y/n):", lever)
 
-        if lever == "y":
-            total_coins += 1
-            print("You received 1 coin, your total is now {}.".format(total_coins))
-            return total_coins
-    return 0 
+    if lever == "y":
+        total_coins = total_coins + 1
+        print("You received 1 coin, your total is now {}.".format(total_coins))
+        return 1
+    elif lever == "n": 
+        return 0
 
 
 def play_one_move(col, row, valid_directions):
@@ -101,15 +102,16 @@ def play_one_move(col, row, valid_directions):
 
     if not direction in valid_directions:
         print("Not a valid direction!")
+        valid = False
     else:
         col, row = move(direction, col, row)
         victory = is_victory(col, row)
-    return victory, col, row
+        valid = True
+    return victory, col, row, valid
 
 def check_if_lever(col, row,):
     for i in LEVERS:
         if col == i[0] and row == i[1]:
-            LEVERS.remove(i)
             return True
 
 # The main program starts here
@@ -120,13 +122,17 @@ while play_again.lower() != "n":
     col = 1
     rand.seed(int(input("Input seed: ")))
     total_coins = 0
+    moves = 0
     while not victory:
+
         valid_directions = find_directions(col, row)
         print_directions(valid_directions)
-        victory, col, row = play_one_move(col, row, valid_directions)
+        victory, col, row, valid = play_one_move(col, row, valid_directions)
         is_lever = check_if_lever(col, row)
         if is_lever:
-            new_value = pull_lever(is_lever, total_coins)
-            total_coins += new_value
-    print("Victory!")
-    play_again = input("Play a gain (y/n): ")
+            if valid:
+                new_value = pull_lever(is_lever, total_coins)
+                total_coins += new_value
+        moves += 1
+    print("Victory! Total coins {}. Moves {}.".format(total_coins, moves))
+    play_again = input("Play again (y/n): ")
