@@ -89,29 +89,22 @@ def pull_lever(is_lever, total_coins):
     if lever == "y":
         total_coins = total_coins + 1
         print("You received 1 coin, your total is now {}.".format(total_coins))
-        return total_coins
+        return 1
     elif lever == "n": 
-        return total_coins
+        return 0
 
 # The main program starts here
 victory = False
 row = 1
 col = 1
 total_coins = 0
-right_direction = True
 
 while not victory:
     valid_directions, is_lever = find_directions(col, row)
-<<<<<<< HEAD
-    if is_lever:
-    new_value = pull_lever(is_lever, total_coins)
-    total_coins += new_value
-=======
     if is_lever and right_direction:
         new_value = pull_lever(is_lever, total_coins)
         total_coins += new_value
->>>>>>> 642880bcc57827447b9d040785287546dc6b8d0c
     print_directions(valid_directions)
     victory, col, row, right_direction = play_one_move(col, row, valid_directions)
 
-print("Victory! Total coins {}".format(total_coins))
+print("Victory! Total coins {}.".format(total_coins))
